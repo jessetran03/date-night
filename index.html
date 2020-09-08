@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan the perfect date</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div>
+        <h1>Date Night</h1>
+        <h2><i>Plan the perfect date.</i></h2>
+        <form>
+
+            <label for="city">Enter location/city.</label>
+            <input id="js-city" type="text" name="city" value="Northwest Arkansas"/>
+
+            <br>
+            <br>
+
+            <label for="cuisine">Type of cuisinse:</label>
+            <select id = "js-cuisine" name="cuisine" size="1">
+                <option value="1">American</option>
+                <option value="3">Asian</option>
+                <option value="30">Cafe</option>
+                <option value="25">Chinese</option>                
+                <option value="5">Desserts</option>
+                <option value="45">French</option>
+                <option value="38">Italian</option>
+                <option value="60">Japanese</option>
+            </select>
+            <br>
+            <br>
+
+            <input id="js-find" type="submit" value="Find!">
+            
+        </form>
+
+        <p id="js-error-message" class="error-message"></p>
+        <div class="results hidden">
+            <h3>Results:</h3>
+            <ul>
+
+            </ul>
+            
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.js" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</body>
+</html>
