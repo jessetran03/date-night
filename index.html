@@ -8,38 +8,48 @@
 </head>
 <body>
     <div>
-        <h1>Date Night</h1>
-        <h2><i>Plan the perfect date.</i></h2>
-        <form>
+        <div>
+            <h1>Date Night</h1>
+            <h2><i>Plan the perfect date.</i></h2>
+            <form id="js-find-dinner">
 
-            <label for="city">Enter location/city.</label>
-            <input id="js-city" type="text" name="city" value="Northwest Arkansas"/>
+                <label for="city">Enter location/city.</label>
+                <input id="js-city" type="text" name="city" value="Northwest Arkansas"/>
 
-            <br>
-            <br>
+                <br>
+                <br>
 
-            <label for="cuisine">Type of cuisinse:</label>
-            <select id = "js-cuisine" name="cuisine" size="1">
-                <option value="1">American</option>
-                <option value="3">Asian</option>
-                <option value="30">Cafe</option>
-                <option value="25">Chinese</option>                
-                <option value="5">Desserts</option>
-                <option value="45">French</option>
-                <option value="38">Italian</option>
-                <option value="60">Japanese</option>
-            </select>
-            <br>
-            <br>
+                <label for="cuisine">Type of cuisine for dinner:</label>
+                <select id="js-cuisine" name="cuisine" size="1">
+                    <option value="1">American</option>
+                    <option value="3">Asian</option>
+                    <option value="30">Cafe</option>
+                    <option value="25">Chinese</option>                
+                    <option value="45">French</option>
+                    <option value="38">Italian</option>
+                    <option value="60">Japanese</option>
+                </select>
+                <br>
+                <br>
 
-            <input id="js-find" type="submit" value="Find!">
-            
-        </form>
+                <input type="submit" value="Find Dinner!">
+
+            </form>
+            <form id="js-find-dessert">
+                <input type="submit" value="Find Dessert!">
+            </form>
+        </div>
+        <div>
+            <ul class="plan js-plan">
+
+            </ul>
+
+        </div>
 
         <p id="js-error-message" class="error-message"></p>
         <div class="results hidden">
-            <h3>Results:</h3>
-            <ul>
+            <h3></h3>
+            <ul class="js-results">
 
             </ul>
             

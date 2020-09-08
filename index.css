@@ -2,6 +2,10 @@
     display: none;
 }
 
-.results li{
+.results ul, .plan {
+    list-style: none;
+}
+
+.results li {
     border: 1px solid #000000;
 }
