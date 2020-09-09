@@ -10,9 +10,16 @@ var dessertPlan = {
     name: 'ShareTea'
 }
 
+var locationCoordinates = {
+    latitude: 0,
+    longitude: 0
+}
+
 const apiKey = 'fe850c92430159e0da149069f487adc8'; 
+const apiKeyWeather = 'dcc1918d9ee5440ba661067d4f1eea46'
 const searchURL = 'https://developers.zomato.com/api/v2.1/search';
 const locationURL = 'https://developers.zomato.com/api/v2.1/locations'
+const weatherURL = 'https://api.weatherbit.io/v2.0/forecast/hourly'
 
 function renderDatePlan() {
     $('.js-plan').html(
@@ -27,11 +34,11 @@ function renderDatePlan() {
 
 function handleItemSelect() {
     $('.js-results').on('click', '.js-select-dinner', event => {
-        dinnerPlan.name = $(event.currentTarget).siblings('h3').text();
+        dinnerPlan.name = $(event.currentTarget).siblings('h4').text();
         renderDatePlan();
     });
     $('.js-results').on('click', '.js-select-dessert', event => {
-        dessertPlan.name = $(event.currentTarget).siblings('h3').text();
+        dessertPlan.name = $(event.currentTarget).siblings('h4').text();
         renderDatePlan();
     });
 }
@@ -42,41 +49,48 @@ function formatQueryParams(params) {
             return queryItems.join('&');
 }
 
-function displayResults(responseJson) {
+function displayResultsLocation(responseJson, searchTerm) {
+    let locationTitle = responseJson.location_suggestions[0].title;
+    let planItem = '';
+    if (searchTerm === 5) {
+        planItem = 'dessert';
+    }
+    else {
+        planItem = 'dinner';
+    }
+    $('.results h3').empty().append(`Displaying ${planItem} results for ${locationTitle}`);
+    $('.js-results').empty();
+}
+
+function displayResults(responseJson, planItem) {
     console.log(responseJson);
-    $('.results h3').empty().append(`Displaying dinner results for ${responseJson.restaurants[0].restaurant.location.city}`);
     $('.js-results').empty();
     for (let i = 0; i < responseJson.restaurants.length; i++){
-        $('.results ul').append(
+        $('.js-results').append(
             `<li><div id="${responseJson.restaurants[i].restaurant.id}">
-                <h3>${responseJson.restaurants[i].restaurant.name}</h3>
+                <h4>${responseJson.restaurants[i].restaurant.name}</h4>
                 <p>${responseJson.restaurants[i].restaurant.cuisines}</p>
-                <p>Average user rating: ${responseJson.restaurants[i].restaurant.user_rating.aggregate_rating}</p>
+                <p>Rating: ${responseJson.restaurants[i].restaurant.user_rating.aggregate_rating}
+                (${responseJson.restaurants[i].restaurant.user_rating.votes} reviews)</p>
                 <p>${responseJson.restaurants[i].restaurant.location.locality}</p>
                 <p>${responseJson.restaurants[i].restaurant.location.address}</p>
-                <button class="js-select-dinner">Select</button>
+                <p>Hours:${responseJson.restaurants[i].restaurant.timings}</p>
+                <button class="js-select-${planItem}">Select for ${planItem}</button>
             </div></li>`
         )};
     $('.results').removeClass('hidden');
 };
 
-function displayDessertResults(responseJson) {
+function displayWeather(responseJson) {
     console.log(responseJson);
-    $('.results h3').empty().append(`Displaying dessert results for ${responseJson.restaurants[0].restaurant.location.city}`);
-    $('.js-results').empty();
-    for (let i = 0; i < responseJson.restaurants.length; i++){
-        $('.results ul').append(
-            `<li><div id="${responseJson.restaurants[i].restaurant.id}">
-                <h3>${responseJson.restaurants[i].restaurant.name}</h3>
-                <p>${responseJson.restaurants[i].restaurant.cuisines}</p>
-                <p>Average user rating: ${responseJson.restaurants[i].restaurant.user_rating.aggregate_rating}</p>
-                <p>${responseJson.restaurants[i].restaurant.location.locality}</p>
-                <p>${responseJson.restaurants[i].restaurant.location.address}</p>
-                <button class="js-select-dessert">Select</button>
-            </div></li>`
-        )};
-    $('.results').removeClass('hidden');
-};
+    $('.js-weather').empty();
+    for (let i = 0; i < 12; i = i + 2) {
+        $('.js-weather').append(
+            `<li>Time: ${responseJson.data[i].timestamp_local}: ${responseJson.data[i].temp}°F</li>`
+        );
+    }
+    $('#js-weather').removeClass('hidden');
+}
 
 function getCity(searchCity, searchTerm) {
     const params = {
@@ -97,16 +111,20 @@ function getCity(searchCity, searchTerm) {
         }
         throw new Error(response.statusText);
     })
-    .then(responseJson => getEntityCode(responseJson, searchTerm))
+    .then(responseJson => getLocationCode(responseJson, searchTerm))
     .catch(err => {
         $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
 }
 
-function getEntityCode(responseJson, searchTerm) {
+function getLocationCode(responseJson, searchTerm) {
     console.log(responseJson);
+    displayResultsLocation(responseJson, searchTerm);
+    locationCoordinates.latitude = responseJson.location_suggestions[0].latitude;
+    locationCoordinates.longitude = responseJson.location_suggestions[0].longitude;
     const entityCode = responseJson.location_suggestions[0].entity_id;
     const entityType = responseJson.location_suggestions[0].entity_type;
+    getWeather();
     getRestaurants(entityCode, entityType, searchTerm);
 }
 
@@ -115,13 +133,19 @@ function getRestaurants(entityCode, entityType, searchTerm) {
         entity_id: entityCode,
         entity_type: entityType,
         cuisines: searchTerm,
-        count: 50,
+        count: 25,
         sort: 'rating'
     };
     const queryString = formatQueryParams(params)
     const url = searchURL + '?' + queryString;
 
-    console.log(url);
+    let planItem = '';
+    if (searchTerm === 5) {
+        planItem = 'dessert';
+    }
+    else {
+        planItem = 'dinner';
+    }
 
     const options = {
         headers: new Headers({
@@ -136,12 +160,34 @@ function getRestaurants(entityCode, entityType, searchTerm) {
             throw new Error(response.statusText);
         })
         .then(responseJson => {
-            if (searchTerm === 5) {
-                displayDessertResults(responseJson);
+            displayResults(responseJson, planItem);
+        })
+        .catch(err => {
+            $('#js-error-message').text(`Something went wrong: ${err.message}`);
+        });
+}
+
+function getWeather() {
+    const params = {
+        lat: locationCoordinates.latitude,
+        lon: locationCoordinates.longitude,
+        units: 'I',
+        key: apiKeyWeather
+    };
+    const queryString = formatQueryParams(params)
+    const url = weatherURL + '?' + queryString;
+
+    console.log(url);
+
+    fetch(url)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
             }
-            else {
-                displayResults(responseJson);
-            }
+            throw new Error(response.statusText);
+        })
+        .then(responseJson => {
+            displayWeather(responseJson);
         })
         .catch(err => {
             $('#js-error-message').text(`Something went wrong: ${err.message}`);
