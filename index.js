@@ -24,23 +24,50 @@ const weatherURL = 'https://api.weatherbit.io/v2.0/forecast/hourly'
 function renderDatePlan() {
     $('.js-plan').html(
         `<li item-id="${dinnerPlan.id}">
-            <span>Dinner: ${dinnerPlan.name}</span>
+            <h5>Dinner</h5>
+            <p>${dinnerPlan.name}</p>
         </li>
+        <br>
         <li item-id="${dessertPlan.id}">
-            <span>Dessert: ${dessertPlan.name}</span>
+            <h5>Dessert</h5>
+            <p>${dessertPlan.name}</p>
         </li>`
     );
 }
 
 function handleItemSelect() {
     $('.js-results').on('click', '.js-select-dinner', event => {
-        dinnerPlan.name = $(event.currentTarget).siblings('h4').text();
+        dinnerPlan.name = $(event.currentTarget).siblings('.restaurant-first').children('h4').text();
         renderDatePlan();
     });
     $('.js-results').on('click', '.js-select-dessert', event => {
-        dessertPlan.name = $(event.currentTarget).siblings('h4').text();
+        dessertPlan.name = $(event.currentTarget).siblings('.restaurant-first').children('h4').text();
         renderDatePlan();
     });
+}
+
+function formatHours(rawHours) {
+    let hours = rawHours.split(',');
+    return hours;
+}
+
+function formatTime(rawTime) {
+    //const time = rawTime.slice(rawTime.length - 8)
+    let time = rawTime.substring(11, 13);
+    time = parseInt(time);
+    if (time === 0) {
+        time = '12am';
+    }
+    else if (time === 12) {
+        time = '12pm';
+    }
+    else if (time < 12) {
+        time = time + 'am';
+    }
+    else {
+        time = (time - 12) + 'pm';
+    }
+    return time;
 }
 
 function formatQueryParams(params) {
@@ -66,18 +93,32 @@ function displayResults(responseJson, planItem) {
     console.log(responseJson);
     $('.js-results').empty();
     for (let i = 0; i < responseJson.restaurants.length; i++){
+        const hours = formatHours(responseJson.restaurants[i].restaurant.timings);
+        const id = responseJson.restaurants[i].restaurant.id;
         $('.js-results').append(
-            `<li><div id="${responseJson.restaurants[i].restaurant.id}">
-                <h4>${responseJson.restaurants[i].restaurant.name}</h4>
-                <p>${responseJson.restaurants[i].restaurant.cuisines}</p>
-                <p>Rating: ${responseJson.restaurants[i].restaurant.user_rating.aggregate_rating}
-                (${responseJson.restaurants[i].restaurant.user_rating.votes} reviews)</p>
-                <p>${responseJson.restaurants[i].restaurant.location.locality}</p>
-                <p>${responseJson.restaurants[i].restaurant.location.address}</p>
-                <p>Hours:${responseJson.restaurants[i].restaurant.timings}</p>
-                <button class="js-select-${planItem}">Select for ${planItem}</button>
-            </div></li>`
-        )};
+            `<li>
+                <div id="${id}" class="result-item">
+                    <div class="restaurant-first">
+                        <h4>${responseJson.restaurants[i].restaurant.name}</h4>
+                        <p>${responseJson.restaurants[i].restaurant.cuisines}</p>
+                        <p>Rating: ${responseJson.restaurants[i].restaurant.user_rating.aggregate_rating}
+                        (${responseJson.restaurants[i].restaurant.user_rating.votes} reviews)</p>
+                        <p>${responseJson.restaurants[i].restaurant.location.locality}</p>
+                        <p>${responseJson.restaurants[i].restaurant.location.address}</p>
+                    </div>
+                    <p><u>Hours:</u></p>`
+        );
+        for (let j = 0; j < hours.length; j++) {
+            $(`#${id}`).append(    
+                `<p>${hours[j]}</p>`
+            );
+        }
+        $(`#${id}`).append(
+                    `<button class="js-select-${planItem}">Select for ${planItem}</button>
+                </div>
+            </li>`
+        );
+    }
     $('.results').removeClass('hidden');
 };
 
@@ -85,8 +126,9 @@ function displayWeather(responseJson) {
     console.log(responseJson);
     $('.js-weather').empty();
     for (let i = 0; i < 12; i = i + 2) {
+        const time = formatTime(responseJson.data[i].timestamp_local);
         $('.js-weather').append(
-            `<li>Time: ${responseJson.data[i].timestamp_local}: ${responseJson.data[i].temp}°F</li>`
+            `<li>${time}: ${responseJson.data[i].temp}°F</li>`
         );
     }
     $('#js-weather').removeClass('hidden');
@@ -176,8 +218,6 @@ function getWeather() {
     };
     const queryString = formatQueryParams(params)
     const url = weatherURL + '?' + queryString;
-
-    console.log(url);
 
     fetch(url)
         .then(response => {

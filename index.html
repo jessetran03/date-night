@@ -7,59 +7,61 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    <div class="group">
+
+        <div class="group-two">
+            <div class="wrapper">
+                <h1>DATE NIGHT</h1>
+                <h2><i>Plan the perfect date.</i></h2>
+                <form id="js-find-dinner">
+
+                    <label for="city">Enter location/city.</label>
+                    <input id="js-city" type="text" name="city" value="Northwest Arkansas"/>
+                    <br>
+
+                    <label for="cuisine">Type of cuisine for dinner:</label>
+                    <select id="js-cuisine" name="cuisine" size="1">
+                        <option value="1">American</option>
+                        <option value="3">Asian</option>
+                        <option value="30">Cafe</option>
+                        <option value="25">Chinese</option>                
+                        <option value="45">French</option>
+                        <option value="38">Italian</option>
+                        <option value="60">Japanese</option>
+                    </select>
+                    <br>
+
+                    <input type="submit" value="Find Dinner!">
+
+                </form>
+                <form id="js-find-dessert">
+                    <input type="submit" value="Find Dessert!">
+                </form>
+            </div>
+
+            <div class="wrapper">
+                <ul class="plan js-plan">
+                    <!--Date Plan Here-->
+                </ul>
+            </div>
+        </div>
+
+        <div id="js-weather" class="wrapper hidden">
+            <h5>Weather</h5>
+            <ul class="weather js-weather">
+                <!--Weather Displayed Here-->
+            </ul>
+        </div>
+
+    </div>
+
     <div>
-        <div>
-            <h1>Date Night</h1>
-            <h2><i>Plan the perfect date.</i></h2>
-            <form id="js-find-dinner">
-
-                <label for="city">Enter location/city.</label>
-                <input id="js-city" type="text" name="city" value="Northwest Arkansas"/>
-
-                <br>
-                <br>
-
-                <label for="cuisine">Type of cuisine for dinner:</label>
-                <select id="js-cuisine" name="cuisine" size="1">
-                    <option value="1">American</option>
-                    <option value="3">Asian</option>
-                    <option value="30">Cafe</option>
-                    <option value="25">Chinese</option>                
-                    <option value="45">French</option>
-                    <option value="38">Italian</option>
-                    <option value="60">Japanese</option>
-                </select>
-                <br>
-                <br>
-
-                <input type="submit" value="Find Dinner!">
-
-            </form>
-            <form id="js-find-dessert">
-                <input type="submit" value="Find Dessert!">
-            </form>
-        </div>
-        <div>
-            <ul class="plan js-plan">
-
-            </ul>
-
-        </div>
-
-        <div id="js-weather" class="hidden">
-            <p>Weather:</p>
-            <ul class="js-weather">
-
-            </ul>
-        </div>
-
         <p id="js-error-message" class="error-message"></p>
-        <div class="results hidden">
+        <div class="results wrapper hidden">
             <h3></h3>
             <ul class="js-results">
-
+                <!--Results Displayed Here-->
             </ul>
-            
         </div>
     </div>
 
