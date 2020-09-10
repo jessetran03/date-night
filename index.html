@@ -35,19 +35,10 @@
 
     <section class="group hidden">
 
-        <div class="group-one">
-            <div class="item wrapper">
-                <form id="js-change-location">
-                    <label for="city">Enter location or city:</label>
-                    <input id="js-city" type="text" name="city" required/>
-                    <br>
+        <div class="group-two">
 
-                    <button for="city" type="submit" class="js-change-location">Change Location</button>
-                    <br>
-                </form>
-            </div>
-            <div class="item wrapper">
-                <label for="cuisine">Type of cuisine for dinner:</label>
+            <div class="item-one wrapper">
+                <label for="cuisine">Select cuisine:</label>
                 <select id="js-cuisine" name="cuisine" size="1">
                     <option value="1">American</option>
                     <option value="3">Asian</option>
@@ -57,27 +48,43 @@
                     <option value="60">Japanese</option>
                 </select>
                 <br>
-
                 <button class="js-find-dinner">Search for Dinner</button>
-                <p>Or look for place to eat after.</p>
+                <br>
+                <label>Or look for dessert:</label>
+                <br>
                 <button class="js-find-dessert">Search for Dessert</button>
             </div>
+
+            <div class="item-two wrapper">
+                <form id="js-change-location">
+                    <label for="city">Enter location or city:</label>
+                    <input id="js-city" type="text" name="city" required/>
+                    <br>
+
+                    <button for="city" type="submit" class="js-change-location">Change Location</button>
+                    <br>
+                </form>
+            </div>
+
         </div>  
           
-        <div class ="group-two">
-            <div class="wrapper">
+        <div class ="group-one">
+
+            <div class="item-one wrapper">
                 <ul class="plan js-plan">
                     <!--Date Plan Here-->
                 </ul>
             </div>
 
-            <div id="js-weather" class="wrapper hidden">
+            <div id="js-weather" class="item-two wrapper">
                 <h5>Weather</h5>
                 <ul class="weather js-weather">
                     <!--Weather Displayed Here-->
                 </ul>
             </div>
+
         </div>
+
     </section>
 
     <section class="results hidden">

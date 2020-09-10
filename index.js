@@ -85,7 +85,6 @@ function displayWeather(responseJson) {
             `<li>${time}: ${responseJson.data[i].temp}°F</li>`
         );
     }
-    $('#js-weather').removeClass('hidden');
 }
 
 function displayResultsHeader(searchTerm) {
