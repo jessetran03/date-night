@@ -11,6 +11,7 @@ var dessertPlan = {
 }
 
 var currentLocation = {
+    title: '',
     latitude: 0,
     longitude: 0,
     entityCode: 0,
@@ -25,16 +26,21 @@ const weatherURL = 'https://api.weatherbit.io/v2.0/forecast/hourly'
 
 function renderDatePlan() {
     $('.js-plan').html(
-        `<li item-id="${dinnerPlan.id}">
-            <h5>Dinner</h5>
-            <p>${dinnerPlan.name}</p>
+        `<li item-id="${currentLocation.entityCode}">
+            <h5>Location</h5>
+            <p>${currentLocation.title}</span>
         </li>
-        <br>
+        <li item-id="${dinnerPlan.id}">
+            <h5>Dinner</h5>
+            <p id="js-dinner">${dinnerPlan.name}</span>
+        </li>
         <li item-id="${dessertPlan.id}">
             <h5>Dessert</h5>
-            <p>${dessertPlan.name}</p>
+            <p id="js-dessert">${dessertPlan.name}</span>
         </li>`
     );
+    $('.group').removeClass('hidden');
+    $('.initial').remove();
 }
 
 function handleItemSelect() {
@@ -79,7 +85,7 @@ function formatQueryParams(params) {
 }
 
 function displayResultsLocation(responseJson, searchTerm) {
-    let locationTitle = responseJson.location_suggestions[0].title;
+    currentLocation.title = responseJson.location_suggestions[0].title;
     let planItem = '';
     if (searchTerm === 5) {
         planItem = 'dessert';
@@ -87,7 +93,7 @@ function displayResultsLocation(responseJson, searchTerm) {
     else {
         planItem = 'dinner';
     }
-    $('.results h3').empty().append(`Displaying ${planItem} results for ${locationTitle}`);
+    $('.results h3').empty().append(`Displaying ${planItem} results for ${currentLocation.title}`);
     $('.js-results').empty();
 }
 
@@ -105,12 +111,10 @@ function displayResults(responseJson, planItem) {
                         <p class="results-cuisine">${responseJson.restaurants[i].restaurant.cuisines}</p>
                         <p>Rating: ${responseJson.restaurants[i].restaurant.user_rating.aggregate_rating}
                         (${responseJson.restaurants[i].restaurant.user_rating.votes} reviews)</p>
-
                         <p>${responseJson.restaurants[i].restaurant.location.address}</p>
                     </div>
                     <p><u>Hours</u>:</p>`
         );
-//                        <p>${responseJson.restaurants[i].restaurant.location.locality}</p>
         for (let j = 0; j < hours.length; j++) {
             $(`#${id}`).append(    
                 `<p>${hours[j]}</p>`
@@ -123,6 +127,7 @@ function displayResults(responseJson, planItem) {
         );
     }
     $('.results').removeClass('hidden');
+    renderDatePlan();
 };
 
 function displayWeather(responseJson) {
@@ -135,6 +140,7 @@ function displayWeather(responseJson) {
         );
     }
     $('#js-weather').removeClass('hidden');
+    renderDatePlan();
 }
 
 function getCity(searchCity, searchTerm) {
@@ -237,8 +243,31 @@ function getWeather() {
         });
 }
 
+
+//$('.js-results').on('click', '.js-select-dinner', event => {
+ //   dinnerPlan.name = $(event.currentTarget).siblings('.restaurant-first').children('h4').text();
+ //   renderDatePlan();
+//});
+
+function watchChangeLocation() {
+    $('body').on('click', '.js-change-location', event => {
+        event.preventDefault();
+        const searchCity = $('#js-city').val();
+        getCity(searchCity, 5);
+    });
+}
+
 function watchFormDessert() {
-    $('#js-find-dessert').submit(event => {
+    $('.group-two').on('click', '.js-find-dessert', event => {
+        event.preventDefault();
+        const searchCity = $('#js-city').val();
+        //getCity(searchCity, 5);
+        getRestaurants(5);
+    });
+}
+
+function watchDessert() {
+    $('.group-two').on('click', '#js-dessert', event => {
         event.preventDefault();
         const searchCity = $('#js-city').val();
         getCity(searchCity, 5);
@@ -246,19 +275,21 @@ function watchFormDessert() {
 }
 
 function watchForm() {
-    $('#js-find-dinner').submit(event => {
+    $('.group-two').on('click', '.js-find-dinner', event => {
         event.preventDefault();
         const searchTerm = $('#js-cuisine').val();
         const searchCity = $('#js-city').val();
-        getCity(searchCity, searchTerm);
+        //getCity(searchCity, searchTerm);
+        getRestaurants(searchTerm);
     });
 }
 
 function handleApp() {
     watchForm();
     watchFormDessert();
-    renderDatePlan();
+    watchChangeLocation();
     handleItemSelect();
+    watchDessert();
 }
 
 $(handleApp);

@@ -8,6 +8,7 @@
 
 body {
     background-image: url(city-night.jpg);
+    background-color: #000000;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
@@ -16,16 +17,13 @@ body {
 
 h1, h2, h3, h4, h5, p, label, span, li {
     color: #FFFFFF;
-    padding: 2px;
+    padding: 2px 0;
 }
-
-/*div {
-    border: 1px solid #0000FF;
-}*/
 
 h1 {
     font-size: 40px;
     font-weight: 600;
+    padding-bottom: 0;
 }
 
 h2 {
@@ -33,35 +31,99 @@ h2 {
     color: #999999;
     font-weight: normal;
     font-style: italic;
-    padding: 0 0 5px 0;
+    padding-bottom: 10px;
 }
 
 h5 {
     color: #999999;
     padding: 0 0 3px 0;
+    display: inline;
 }
+
+input[type=text]:focus {
+    outline: none;
+  }
 
 button {
     margin: 5px 0 0 0;
     padding: 2px;
     border-radius: 5px;
+    outline: none;
+    background-color: #333333;
+    color: #FFFFFF;
+    border: 2px solid #AAAAAA;
+}
+
+button:hover{
+    cursor: pointer;
+    background-color:#2B2B2B;
 }
 
 .wrapper {
-    margin: 20px;
-    padding: 10px;
+    margin: 10px;
+    padding: 5px;
     /*border: 1px solid #FF0000*/
 }
 
-.hidden {
-    display: none;
-}
 
 .plan p {
     font-size: 24px;
 }
+.plan p:hover {
+    cursor: pointer;
+    color: #CCCCCC;
+    text-decoration: underline;
+}
+.plan p:active {
+    color: #999999;
+}
+/*-----------------------TITLE-SCREEN----------------------*/
+
+.initial {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 300px 0;
+}
+
+.initial-search {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid #555555;
+    border-radius: 12px;
+    background-color: rgba(0,0,0,0.7);
+    padding: 20px;
+}
+
+.initial h1 {
+    font-size: 46px;
+}
+
+.initial h2 {
+    padding-left: 5px;
+    font-size: 15px;
+}
+
+.initial label {
+    font-size: 18px;
+}
+
+.initial input {
+    font-size: 18px;
+    border-radius: 8px;
+    padding: 8px 8px 6px 8px;
+}
+
+.initial button {
+    font-size: 16px;
+    border-radius: 8px;
+    padding: 5px 5px 3px 5px;
+}
+
 
 /*--------------------------RESULTS-SECTION----------------------------*/
+
 .results-header {
     margin: 0 0 0 20px;
     padding: 0 0 0 20px;
@@ -109,9 +171,48 @@ h4 {
     flex-direction: column;
 }
 
+.hidden {
+    display: none;
+}
+
+/*--------------DESKTOP------------*/
+
 @media all and (min-width: 800px) {
     .group-two {
         flex-direction: row;
     }
-}
 
+   .wrapper {
+    margin: 20px;
+    padding: 10px;
+    /*border: 1px solid #FF0000*/
+    } 
+
+    .initial-search {
+        padding: 26px;
+        border: 4px solid #555555;
+    }
+
+    .initial h1 {
+        font-size: 64px;
+    }
+
+    .initial h2 {
+        padding-left: 5px;
+        font-size: 20px;
+    }
+
+    .initial label {
+        font-size: 24px;
+    }
+
+    .initial input {
+        font-size: 24px;
+        width: 350px;
+    }
+
+    .initial button {
+        font-size: 21px;
+        border-radius: 8px;
+}
+}

@@ -7,7 +7,24 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <section class="group">
+
+    <section class="initial">
+        <div class="initial-search">
+            <div>
+                <h1>Date Night</h1>
+                <h2>Plan the perfect date.</h2>
+            </div>
+            <div>
+                <label for="city">Enter location/city:</label>
+                <input id="js-city" type="text" name="city" placeholder="Northwest Arkansas" autofocus/>
+            </div>
+            <br>
+
+            <button class="js-change-location">Start Planning</button>
+        </div>
+    </section>
+
+    <section class="group hidden">
 
         <div class="group-two">
             <div class="wrapper">
@@ -15,8 +32,11 @@
                 <h2>Plan the perfect date.</h2>
                 <form id="js-find-dinner">
 
-                    <label for="city">Enter location/city.</label>
-                    <input id="js-city" type="text" name="city" value="Northwest Arkansas"/>
+                    <label for="city">Enter location/city:</label>
+                    <input id="js-city" type="text" name="city" />
+                    <br>
+
+                    <button class="js-change-location">Change Location.</button>
                     <br>
 
                     <label for="cuisine">Type of cuisine for dinner:</label>
@@ -30,12 +50,11 @@
                     </select>
                     <br>
 
-                    <input type="submit" value="Find Dinner!">
+                    <button class="js-find-dinner">Search for Dinner!</button>
+                    <p>Or look for place to eat after.</p>
+                    <button class="js-find-dessert">Search for Dessert!</button>
+                </form>
 
-                </form>
-                <form id="js-find-dessert">
-                    <input type="submit" value="Find Dessert!">
-                </form>
             </div>
 
             <div class="wrapper">
