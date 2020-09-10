@@ -31,7 +31,6 @@ h2 {
     color: #999999;
     font-weight: normal;
     font-style: italic;
-    padding-bottom: 10px;
 }
 
 h5 {
@@ -42,9 +41,9 @@ h5 {
 
 input[type=text]:focus {
     outline: none;
-  }
+}
 
-button {
+button, input[type=submit] {
     margin: 5px 0 0 0;
     padding: 2px;
     border-radius: 5px;
@@ -54,7 +53,7 @@ button {
     border: 2px solid #FFFFFF;
 }
 
-button:hover{
+button:hover, input[type=submit]:hover {
     cursor: pointer;
     background-color:#2C2C2C;
 }
@@ -62,12 +61,10 @@ button:hover{
 .wrapper {
     margin: 10px;
     padding: 5px;
-    /*border: 1px solid #FF0000*/
 }
 
-
 .plan p {
-    font-size: 24px;
+    font-size: 18px;
 }
 .plan p:hover {
     cursor: pointer;
@@ -83,7 +80,7 @@ button:hover{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 300px 0;
+    margin: 230px 0;
 }
 
 .initial-search {
@@ -94,6 +91,10 @@ button:hover{
     border-radius: 12px;
     background-color: rgba(0,0,0,0.7);
     padding: 20px;
+}
+
+.initial .title {
+    margin-bottom: 5px;
 }
 
 .initial h1 {
@@ -108,7 +109,11 @@ button:hover{
 .initial .city-search {
     display: flex;
     flex-direction: column;
-    text-align: center;
+}
+
+.initial form {
+    display: flex;
+    flex-direction: column;
 }
 
 .initial label {
@@ -132,19 +137,21 @@ button:hover{
 /*--------------------------RESULTS-SECTION----------------------------*/
 
 .results-header {
-    margin: 0 0 0 20px;
-    padding: 0 0 0 20px;
+    margin: 0 10px;
+    padding: 0 5px;
 }
 .results-list {
     background: rgba(0,0,0,0.8);
-    margin: 0 20px 20px 20px;
-    padding: 5px 10px 5px 10px;
+    margin: 0 10px 10px 10px;
+    padding: 0 5px;
+    border-radius: 8px;
 }
 
 .results-item {
     padding: 10px;
-    margin: 5px 0;
+    margin: 2px 0;
     border: 1px solid #FFFFFF;
+    border-radius: 8px;
 }
 
 .results-cuisine{
@@ -161,30 +168,25 @@ button:hover{
     padding: 5px 0 10px 0;
 }
 
-h4 {
+.results h4 {
     padding: 0;
     font-size: 20px;
 }
 
-body {
-    background-image: url(city-night.jpg);
-    background-color: #000000;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
+.results h3 {
+    font-size: 13px;
 }
 
 /*----------------------------------FLEX-----------------------------------*/
 
 .group {
     display: flex;
-    flex-direction: row;
+    flex-direction: column-reverse;
 }
 
-.group-two {
+.group-one, .group-two {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .hidden {
@@ -194,6 +196,14 @@ body {
 /*--------------DESKTOP------------*/
 
 @media all and (min-width: 800px) {
+    .group {
+        flex-direction: row;
+    }
+
+    .group-one {
+        flex-direction: column;
+    }
+
     .group-two {
         flex-direction: row;
     }
@@ -201,7 +211,6 @@ body {
    .wrapper {
     margin: 20px;
     padding: 10px;
-    /*border: 1px solid #FF0000*/
     } 
 
     body {
@@ -244,5 +253,38 @@ body {
     .initial button {
         font-size: 21px;
         border-radius: 8px;
+    }
+
+    .plan p {
+        font-size: 24px;
+    }
+
+    .results-header {
+        margin: 0 20px;
+        padding: 0 20px;
+    }
+    .results-list {
+        margin: 0 20px 20px 20px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .results-item {
+        margin: 5px 0;
+    }
+
+    .results h3 {
+        font-size: 18px;
+    }
+    
+    .results h4 {
+        font-size: 24px;
+    }
 }
+
+/*div {
+    border: 1px solid #0000FF;
 }
+
+section {
+    border: 1px solid #00FF00;
+}*/

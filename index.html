@@ -10,67 +10,74 @@
 
     <section class="initial">
         <div class="initial-search">
-            <div>
+            <div class="title">
                 <h1>Date Night</h1>
                 <h2>Plan the perfect date.</h2>
             </div>
-            <div class="city-search">
-                <label for="city">Enter location or city:</label>
-                <input id="js-city" type="text" name="city" placeholder="Northwest Arkansas" autofocus/>
-            </div>
-            <br>
+            <form id="js-initial-search">
+                <div class="city-search">
+                    <label for="city">Enter location or city:</label>
+                    <!--Change value to placeholder-->
+                    <input id="js-city" type="text" name="city" value="Northwest Arkansas" autofocus required/>
+                </div>
+                <br>
+                <button for="city" type="submit" class="js-change-location">Start Planning</button>
+            </form>
+        </div>
+    </section>
 
-            <button class="js-change-location">Start Planning</button>
+    <section class="title hidden">
+        <div class="wrapper">
+            <h1>Date Night</h1>
+            <h2>Plan the perfect date.</h2>
         </div>
     </section>
 
     <section class="group hidden">
 
-        <div class="group-two">
-            <div class="wrapper">
-                <h1>Date Night</h1>
-                <h2>Plan the perfect date.</h2>
-                <form id="js-find-dinner">
-
+        <div class="group-one">
+            <div class="item wrapper">
+                <form id="js-change-location">
                     <label for="city">Enter location or city:</label>
-                    <input id="js-city" type="text" name="city" />
+                    <input id="js-city" type="text" name="city" required/>
                     <br>
 
-                    <button class="js-change-location">Change Location</button>
+                    <button for="city" type="submit" class="js-change-location">Change Location</button>
                     <br>
-
-                    <label for="cuisine">Type of cuisine for dinner:</label>
-                    <select id="js-cuisine" name="cuisine" size="1">
-                        <option value="1">American</option>
-                        <option value="3">Asian</option>
-                        <option value="25">Chinese</option>                
-                        <option value="45">French</option>
-                        <option value="38">Italian</option>
-                        <option value="60">Japanese</option>
-                    </select>
-                    <br>
-
-                    <button class="js-find-dinner">Search for Dinner</button>
-                    <p>Or look for place to eat after.</p>
-                    <button class="js-find-dessert">Search for Dessert</button>
                 </form>
-
             </div>
+            <div class="item wrapper">
+                <label for="cuisine">Type of cuisine for dinner:</label>
+                <select id="js-cuisine" name="cuisine" size="1">
+                    <option value="1">American</option>
+                    <option value="3">Asian</option>
+                    <option value="25">Chinese</option>                
+                    <option value="45">French</option>
+                    <option value="38">Italian</option>
+                    <option value="60">Japanese</option>
+                </select>
+                <br>
 
+                <button class="js-find-dinner">Search for Dinner</button>
+                <p>Or look for place to eat after.</p>
+                <button class="js-find-dessert">Search for Dessert</button>
+            </div>
+        </div>  
+          
+        <div class ="group-two">
             <div class="wrapper">
                 <ul class="plan js-plan">
                     <!--Date Plan Here-->
                 </ul>
             </div>
-        </div>
 
-        <div id="js-weather" class="wrapper hidden">
-            <h5>Weather</h5>
-            <ul class="weather js-weather">
-                <!--Weather Displayed Here-->
-            </ul>
+            <div id="js-weather" class="wrapper hidden">
+                <h5>Weather</h5>
+                <ul class="weather js-weather">
+                    <!--Weather Displayed Here-->
+                </ul>
+            </div>
         </div>
-
     </section>
 
     <section class="results hidden">
