@@ -10,9 +10,11 @@ var dessertPlan = {
     name: 'ShareTea'
 }
 
-var locationCoordinates = {
+var currentLocation = {
     latitude: 0,
-    longitude: 0
+    longitude: 0,
+    entityCode: 0,
+    entityType: ''
 }
 
 const apiKey = 'fe850c92430159e0da149069f487adc8'; 
@@ -97,17 +99,18 @@ function displayResults(responseJson, planItem) {
         const id = responseJson.restaurants[i].restaurant.id;
         $('.js-results').append(
             `<li>
-                <div id="${id}" class="result-item">
+                <div id="${id}" class="results-item">
                     <div class="restaurant-first">
                         <h4>${responseJson.restaurants[i].restaurant.name}</h4>
-                        <p>${responseJson.restaurants[i].restaurant.cuisines}</p>
+                        <p class="results-cuisine">${responseJson.restaurants[i].restaurant.cuisines}</p>
                         <p>Rating: ${responseJson.restaurants[i].restaurant.user_rating.aggregate_rating}
                         (${responseJson.restaurants[i].restaurant.user_rating.votes} reviews)</p>
-                        <p>${responseJson.restaurants[i].restaurant.location.locality}</p>
+
                         <p>${responseJson.restaurants[i].restaurant.location.address}</p>
                     </div>
-                    <p><u>Hours:</u></p>`
+                    <p><u>Hours</u>:</p>`
         );
+//                        <p>${responseJson.restaurants[i].restaurant.location.locality}</p>
         for (let j = 0; j < hours.length; j++) {
             $(`#${id}`).append(    
                 `<p>${hours[j]}</p>`
@@ -162,18 +165,18 @@ function getCity(searchCity, searchTerm) {
 function getLocationCode(responseJson, searchTerm) {
     console.log(responseJson);
     displayResultsLocation(responseJson, searchTerm);
-    locationCoordinates.latitude = responseJson.location_suggestions[0].latitude;
-    locationCoordinates.longitude = responseJson.location_suggestions[0].longitude;
-    const entityCode = responseJson.location_suggestions[0].entity_id;
-    const entityType = responseJson.location_suggestions[0].entity_type;
+    currentLocation.latitude = responseJson.location_suggestions[0].latitude;
+    currentLocation.longitude = responseJson.location_suggestions[0].longitude;
+    currentLocation.entityCode = responseJson.location_suggestions[0].entity_id;
+    currentLocation.entityType = responseJson.location_suggestions[0].entity_type;
     getWeather();
-    getRestaurants(entityCode, entityType, searchTerm);
+    getRestaurants(searchTerm);
 }
 
-function getRestaurants(entityCode, entityType, searchTerm) {
+function getRestaurants(searchTerm) {
     const params = {
-        entity_id: entityCode,
-        entity_type: entityType,
+        entity_id: currentLocation.entityCode,
+        entity_type: currentLocation.entityType,
         cuisines: searchTerm,
         count: 25,
         sort: 'rating'
@@ -211,8 +214,8 @@ function getRestaurants(entityCode, entityType, searchTerm) {
 
 function getWeather() {
     const params = {
-        lat: locationCoordinates.latitude,
-        lon: locationCoordinates.longitude,
+        lat: currentLocation.latitude,
+        lon: currentLocation.longitude,
         units: 'I',
         key: apiKeyWeather
     };

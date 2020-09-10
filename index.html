@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div class="group">
+    <section class="group">
 
         <div class="group-two">
             <div class="wrapper">
-                <h1>DATE NIGHT</h1>
-                <h2><i>Plan the perfect date.</i></h2>
+                <h1>Date Night</h1>
+                <h2>Plan the perfect date.</h2>
                 <form id="js-find-dinner">
 
                     <label for="city">Enter location/city.</label>
@@ -23,7 +23,6 @@
                     <select id="js-cuisine" name="cuisine" size="1">
                         <option value="1">American</option>
                         <option value="3">Asian</option>
-                        <option value="30">Cafe</option>
                         <option value="25">Chinese</option>                
                         <option value="45">French</option>
                         <option value="38">Italian</option>
@@ -53,17 +52,19 @@
             </ul>
         </div>
 
-    </div>
+    </section>
 
-    <div>
-        <p id="js-error-message" class="error-message"></p>
-        <div class="results wrapper hidden">
+    <section class="results hidden">
+        <div class="results-header">
+            <p id="js-error-message" class="error-message"></p>
             <h3></h3>
+        </div>
+        <div class="results-list">
             <ul class="js-results">
                 <!--Results Displayed Here-->
             </ul>
         </div>
-    </div>
+    </section>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.js" crossorigin="anonymous"></script>
     <script src="index.js"></script>

@@ -1,13 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Helvetica';
+    font-family: 'Kumbh Sans', sans-serif;
 }
 
 body {
     background-image: url(city-night.jpg);
     background-repeat: no-repeat;
-    background-color: #333333;
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
@@ -15,22 +16,28 @@ body {
 
 h1, h2, h3, h4, h5, p, label, span, li {
     color: #FFFFFF;
+    padding: 2px;
 }
 
 /*div {
     border: 1px solid #0000FF;
 }*/
 
+h1 {
+    font-size: 40px;
+    font-weight: 600;
+}
+
 h2 {
-    font-size: 16px;
+    font-size: 13.5px;
+    color: #999999;
+    font-weight: normal;
+    font-style: italic;
     padding: 0 0 5px 0;
 }
 
-h3 {
-    padding: 10px 0;
-}
-
 h5 {
+    color: #999999;
     padding: 0 0 3px 0;
 }
 
@@ -41,7 +48,7 @@ button {
 }
 
 .wrapper {
-    margin: 10px;
+    margin: 20px;
     padding: 10px;
     /*border: 1px solid #FF0000*/
 }
@@ -55,15 +62,26 @@ button {
 }
 
 /*--------------------------RESULTS-SECTION----------------------------*/
-
-.results {
+.results-header {
+    margin: 0 0 0 20px;
+    padding: 0 0 0 20px;
+}
+.results-list {
     background: rgba(0,0,0,0.8);
+    margin: 0 20px 20px 20px;
+    padding: 5px 10px 5px 10px;
 }
 
-.result-item {
+.results-item {
     padding: 10px;
     margin: 5px 0;
     border: 1px solid #FFFFFF;
+}
+
+.results-cuisine{
+    color: #999999;
+    font-style: italic;
+    font-size: 12px;
 }
 
 .results ul, .plan, .weather {
@@ -75,7 +93,7 @@ button {
 }
 
 h4 {
-    padding: 0 0 3px 0;
+    padding: 0;
     font-size: 20px;
 }
 
