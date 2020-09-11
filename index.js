@@ -95,6 +95,7 @@ function displayResultsHeader(searchTerm) {
     else {
         planItem = 'dinner';
     }
+    $('#js-city').val('');
     $('.results h3').empty().append(`Displaying results for ${planItem} in ${currentLocation.title}`);
     $('.js-results').empty();
 }
@@ -258,13 +259,14 @@ function watchInitialSearch() {
 function watchChangeLocation() {
     $('#js-change-location').submit(event => {
         event.preventDefault();
+        const searchTerm = $('#js-cuisine').val();
         const searchCity = $('#js-city').val();
-        getCity(searchCity, 5);
+        getCity(searchCity, searchTerm);
     });
 }
 
 function watchDinner() {
-    $('.group-one').on('click', '.js-find-dinner', event => {
+    $('.group-two').on('click', '.js-find-dinner', event => {
         event.preventDefault();
         const searchTerm = $('#js-cuisine').val();
         getRestaurants(searchTerm);
@@ -272,7 +274,7 @@ function watchDinner() {
 }
 
 function watchDessert() {
-    $('.group-one').on('click', '.js-find-dessert', event => {
+    $('.group-two').on('click', '.js-find-dessert', event => {
         event.preventDefault();
         getRestaurants(5);
     });
