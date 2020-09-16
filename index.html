@@ -16,11 +16,12 @@
             </div>
             <form id="js-initial-search">
                 <div class="city-search">
-                    <label for="city">Enter location or city:</label>
-                    <input id="js-city" type="text" name="city" placeholder="Northwest Arkansas" autofocus required/>
+                    <label for="js-initial-city">Enter location or city:</label>
+                    <input id="js-initial-city" type="text" name="city" placeholder="Houston" autofocus required/>
                 </div>
+                <p class="js-error-message error-message"></p>
                 <br>
-                <button for="city" type="submit" class="js-change-location">Start Planning</button>
+                <button type="submit" class="js-change-location">Start Planning</button>
             </form>
         </div>
     </section>
@@ -37,30 +38,45 @@
         <div class="group-two">
 
             <div class="item-one wrapper">
-                <label for="cuisine">Select cuisine:</label>
+                <label for="js-cuisine">Select cuisine:</label>
                 <select id="js-cuisine" name="cuisine" size="1">
                     <option value="1">American</option>
                     <option value="3">Asian</option>
+                    <option value="193">BBQ</option>
+                    <option value="182">Breakfast</option>
+                    <option value="30">Cafe</option>
+                    <option value="491">Cajun</option>
                     <option value="25">Chinese</option>                
                     <option value="45">French</option>
+                    <option value="156">Greek</option>
                     <option value="38">Italian</option>
                     <option value="60">Japanese</option>
+                    <option value="67">Korean</option>
+                    <option value="69">Malaysian</option>
+                    <option value="70">Mediterranean</option>
+                    <option value="73">Mexican</option>
+                    <option value="82">Pizza</option>
+                    <option value="304">Sandwich</option>
+                    <option value="83">Seafood</option>
+                    <option value="190">Taiwanese</option>
+                    <option value="95">Thai</option>
+                    <option value="308">Vegetarian</option>
+                    <option value="99">Vietnamese</option>
                 </select>
                 <br>
-                <button class="js-find-dinner">Search for Dinner</button>
+                <button id="js-find-dinner">Search for Dinner</button>
                 <br>
-                <label>Or look for dessert:</label>
+                <label for="js-find-dessert">Or look for dessert:</label>
                 <br>
-                <button class="js-find-dessert">Search for Dessert</button>
+                <button id="js-find-dessert">Search for Dessert</button>
             </div>
 
             <div class="item-two wrapper">
                 <form id="js-change-location">
-                    <label for="city">Enter location or city:</label>
+                    <label for="js-city">Enter location or city:</label>
                     <input id="js-city" type="text" name="city" required/>
                     <br>
-
-                    <button for="city" type="submit" class="js-change-location">Change Location</button>
+                    <button type="submit" class="js-change-location">Change Location</button>
                     <br>
                 </form>
             </div>
@@ -70,14 +86,14 @@
         <div class ="group-one">
 
             <div class="item-one wrapper">
-                <ul class="plan js-plan">
+                <ul id ="js-plan" class="plan">
                     <!--Date Plan Here-->
                 </ul>
             </div>
 
-            <div id="js-weather" class="item-two wrapper">
+            <div class="item-two wrapper">
                 <h5>Weather</h5>
-                <ul class="weather js-weather">
+                <ul id ="js-weather" class="weather">
                     <!--Weather Displayed Here-->
                 </ul>
             </div>
@@ -88,11 +104,11 @@
 
     <section class="results hidden">
         <div class="results-header">
-            <p id="js-error-message" class="error-message"></p>
-            <h3></h3>
+            <p class="js-error-message error-message"></p>
+            <h3><!--Results Header--></h3>
         </div>
         <div class="results-list">
-            <ul class="js-results">
+            <ul id="js-results">
                 <!--Results Displayed Here-->
             </ul>
         </div>

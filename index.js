@@ -1,13 +1,13 @@
 'use strict';
 
 var dinnerPlan = {
-    id: 17354150,
-    name: 'Sushi House'
+    id: 0,
+    name: 'Not yet chosen'
 }
 
 var dessertPlan = {
-    id: 17355196,
-    name: 'Spark Cafe'
+    id: 0,
+    name: 'Not yet chosen'
 }
 
 var currentLocation = {
@@ -58,7 +58,7 @@ function formatQueryParams(params) {
 /*-----------------------------------RENDER-FUNCTIONS------------------------------*/
 
 function renderDatePlan() {
-    $('.js-plan').html(
+    $('#js-plan').html(
         `<li item-id="${currentLocation.entityCode}">
             <h5>Location</h5>
             <p>${currentLocation.title}</span>
@@ -77,11 +77,10 @@ function renderDatePlan() {
 }
 
 function displayWeather(responseJson) {
-    console.log(responseJson);
-    $('.js-weather').empty();
+    $('#js-weather').empty();
     for (let i = 0; i < 12; i = i + 2) {
         const time = formatTime(responseJson.data[i].timestamp_local);
-        $('.js-weather').append(
+        $('#js-weather').append(
             `<li>${time}: ${responseJson.data[i].temp}°F</li>`
         );
     }
@@ -89,7 +88,7 @@ function displayWeather(responseJson) {
 
 function displayResultsHeader(searchTerm) {
     let planItem = '';
-    if (searchTerm === 5) {
+    if (searchTerm === 100) {
         planItem = 'dessert';
     }
     else {
@@ -97,16 +96,15 @@ function displayResultsHeader(searchTerm) {
     }
     $('#js-city').val('');
     $('.results h3').empty().append(`Displaying results for ${planItem} in ${currentLocation.title}`);
-    $('.js-results').empty();
+    $('#js-results').empty();
 }
 
 function displayResults(responseJson, planItem) {
-    console.log(responseJson);
-    $('.js-results').empty();
+    $('#js-results').empty();
     for (let i = 0; i < responseJson.restaurants.length; i++){
         const hours = formatHours(responseJson.restaurants[i].restaurant.timings);
         const id = responseJson.restaurants[i].restaurant.id;
-        $('.js-results').append(
+        $('#js-results').append(
             `<li>
                 <div id="${id}" class="results-item">
                     <div class="restaurant-first">
@@ -124,7 +122,7 @@ function displayResults(responseJson, planItem) {
             );
         }
         $(`#${id}`).append(
-                    `<button class="js-select-${planItem}">Select for ${planItem}</button>
+                    `<button id="js-select-${planItem}">Select for ${planItem}</button>
                 </div>
             </li>`
         );
@@ -135,7 +133,6 @@ function displayResults(responseJson, planItem) {
 /*---------------------------------GET-FUNCTIONS-----------------------------*/
 
 function getLocationCode(responseJson, searchTerm) {
-    console.log(responseJson);
     currentLocation.latitude = responseJson.location_suggestions[0].latitude;
     currentLocation.longitude = responseJson.location_suggestions[0].longitude;
     currentLocation.entityCode = responseJson.location_suggestions[0].entity_id;
@@ -157,6 +154,7 @@ function getCity(searchCity, searchTerm) {
           "user-key": apiKey})
     };
       
+    $('.js-error-message').text('');
     fetch(url, options)
     .then(response => {
         if (response.ok) {
@@ -166,7 +164,7 @@ function getCity(searchCity, searchTerm) {
     })
     .then(responseJson => getLocationCode(responseJson, searchTerm))
     .catch(err => {
-        $('#js-error-message').text(`Something went wrong: ${err.message}`);
+        $('.js-error-message').text(`Could not find city/location. Please enter a different city/location.`);
     });
 }
 
@@ -191,7 +189,7 @@ function getWeather() {
             displayWeather(responseJson);
         })
         .catch(err => {
-            $('#js-error-message').text(`Something went wrong: ${err.message}`);
+            $('.js-error-message').text(`Something went wrong: ${err.message}`);
         });
 }
 
@@ -213,13 +211,14 @@ function getRestaurants(searchTerm) {
       };
 
     let planItem = '';
-    if (searchTerm === 5) {
+    if (searchTerm === 100) {
         planItem = 'dessert';
     }
     else {
         planItem = 'dinner';
     }
 
+    $('.js-error-message').text('');
     fetch(url, options)
         .then(response => {
             if (response.ok) {
@@ -231,18 +230,18 @@ function getRestaurants(searchTerm) {
             displayResults(responseJson, planItem);
         })
         .catch(err => {
-            $('#js-error-message').text(`Something went wrong: ${err.message}`);
+            $('.js-error-message').text(`Something went wrong: ${err.message}`);
         });
 }
 
 /*------------------------------EVENT-LISTENERS-----------------------------------*/
 
 function handleItemSelect() {
-    $('.js-results').on('click', '.js-select-dinner', event => {
+    $('#js-results').on('click', '#js-select-dinner', event => {
         dinnerPlan.name = $(event.currentTarget).siblings('.restaurant-first').children('h4').text();
         renderDatePlan();
     });
-    $('.js-results').on('click', '.js-select-dessert', event => {
+    $('#js-results').on('click', '#js-select-dessert', event => {
         dessertPlan.name = $(event.currentTarget).siblings('.restaurant-first').children('h4').text();
         renderDatePlan();
     });
@@ -251,7 +250,7 @@ function handleItemSelect() {
 function watchInitialSearch() {
     $('#js-initial-search').submit(event => {
         event.preventDefault();
-        const searchCity = $('#js-city').val();
+        const searchCity = $('#js-initial-city').val();
         getCity(searchCity, 1);
     });
 }
@@ -266,7 +265,7 @@ function watchChangeLocation() {
 }
 
 function watchDinner() {
-    $('.group-two').on('click', '.js-find-dinner', event => {
+    $('.group-two').on('click', '#js-find-dinner', event => {
         event.preventDefault();
         const searchTerm = $('#js-cuisine').val();
         getRestaurants(searchTerm);
@@ -274,9 +273,9 @@ function watchDinner() {
 }
 
 function watchDessert() {
-    $('.group-two').on('click', '.js-find-dessert', event => {
+    $('.group-two').on('click', '#js-find-dessert', event => {
         event.preventDefault();
-        getRestaurants(5);
+        getRestaurants(100);
     });
 }
 

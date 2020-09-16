@@ -22,14 +22,9 @@ body:before {
     background-size: cover;
   }
 
-/*body {
-    background-image: url(city-night.jpg);
+body {
     background-color: #000000;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
-}*/
+}
 
 h1, h2, h3, h4, h5, p, label, span, li {
     color: #FFFFFF;
@@ -53,6 +48,10 @@ h5 {
     color: #999999;
     padding: 0 0 3px 0;
     display: inline;
+}
+
+.error-message {
+    font-style: italic;
 }
 
 label {
@@ -83,7 +82,11 @@ button, input[type=submit] {
 
 button:hover, input[type=submit]:hover {
     cursor: pointer;
-    background-color:#2C2C2C;
+    background-color:#1A1A1A;
+}
+
+button:active, input[type=submit]:active {
+    border-color: #1A1A1A;
 }
 
 .wrapper {
@@ -95,7 +98,7 @@ button:hover, input[type=submit]:hover {
     font-size: 18px;
 }
 
-/*-----------------------TITLE-SCREEN----------------------*/
+/*-----------------------------INITIAL-SCREEN--------------------------*/
 
 .initial {
     display: flex;
@@ -158,7 +161,7 @@ button:hover, input[type=submit]:hover {
 }
 
 
-/*--------------------------RESULTS-SECTION----------------------------*/
+/*-----------------------------RESULTS-SECTION-----------------------------*/
 
 .results-header {
     margin: 0 10px;
@@ -236,7 +239,7 @@ button:hover, input[type=submit]:hover {
     height: 100%
 }
 
-/*--------------DESKTOP------------*/
+/*-------------------------------DESKTOP---------------------------------*/
 
 @media all and (min-width: 800px) {
 
@@ -249,8 +252,19 @@ button:hover, input[type=submit]:hover {
         flex-direction: row;
     }
 
-    .group-one .item-one, .group-two .item-two {
+    .group-one .item-one, .group-one .item-two {
         flex: none;
+        flex-direction: column;
+        margin-left: 30px;
+    }
+
+    .group-one .item-one {
+        max-width: 260px;
+    }
+
+    .group-one {
+        margin-left: 0;
+        margin-right: 20px;
     }
 
     .group-two {
@@ -258,7 +272,7 @@ button:hover, input[type=submit]:hover {
     }
     
     .group-two .item-two {
-        margin-left: 20px;
+        flex-direction: column;
         padding-top: 0;
     }
 
@@ -279,14 +293,16 @@ button:hover, input[type=submit]:hover {
         margin-top: 20px;
     }
 
-    /*body {
-        background-image: url(city-night.jpg);
-        background-color: #000000;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-position: center;
-        background-size: cover;
-    }*/
+    .plan p {
+        padding-bottom: 8px;
+        font-size: 28px;
+    }
+
+    .weather li {
+        font-size: 21px;
+    }
+
+    /*-----------------DESKTOP-INITIAL-SCREEN-------------------*/
 
     .initial-search {
         padding: 26px;
@@ -323,14 +339,7 @@ button:hover, input[type=submit]:hover {
         width: 180px;
     }
 
-    .plan p {
-        padding-bottom: 8px;
-        font-size: 28px;
-    }
-
-    .weather li {
-        font-size: 21px;
-    }
+    /*------------------DESKTOP-RESULTS-SECTION----------------------*/
 
     .results-header {
         margin: 0 20px;
@@ -353,11 +362,3 @@ button:hover, input[type=submit]:hover {
         font-size: 24px;
     }
 }
-
-/*div {
-    border: 1px solid #0000FF;
-}
-
-section {
-    border: 1px solid #00FF00;
-}*/
